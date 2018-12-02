@@ -17,9 +17,11 @@ export default function PersonReducer(state = {}, action) {
         case CHANGE_BIRTHDATE:
             return {...state, dateOfBirth: action.value}
         case CHANGE_FIRSTNAME:
-            return {...state, firstname: action.value}
+            let firstname = action.value.charAt(0).toUpperCase() + action.value.slice(1)
+            return {...state, firstname: firstname.trim()}
         case CHANGE_SURNAME:
-            return {...state, surname: action.value}
+            let surname = action.value.charAt(0).toUpperCase() + action.value.slice(1)
+            return {...state, surname: surname.trim()}
         case CHANGE_SIZE:
             return {...state, size: action.value}
         case CHANGE_EYECOLOR:

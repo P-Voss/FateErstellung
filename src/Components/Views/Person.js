@@ -24,7 +24,6 @@ class Person extends Component {
             handleGenderChange, handlePreferenceChange, handleEyecolorChange, handleSizeChange,
             handleSizeValidation, handleResidenceChange, handleFirstnameChange, handleSurnameChange,
             firstname, surname, gender, dateOfBirth, preference, eyeColor, size, residence} = this.props;
-        // console.log(this.props)
         return (
             <React.Fragment>
                 <h2>Dein Charakter</h2>
@@ -165,9 +164,7 @@ class Person extends Component {
                                 Wohnort
                             </FormLabel>
                             <FormHelperText>
-                                <a>
-                                    Ort und Art der Wohnung des Charakters
-                                </a>
+                                Ort und Art der Wohnung des Charakters
                             </FormHelperText>
                         </Grid>
                         <Grid item xs={6} sm={5}>
