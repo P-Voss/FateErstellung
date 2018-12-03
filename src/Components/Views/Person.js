@@ -21,7 +21,7 @@ import Grid from '@material-ui/core/Grid';
 class Person extends Component {
     render() {
         const {
-            handleGenderChange, handlePreferenceChange, handleEyecolorChange, handleSizeChange,
+            handleGenderChange, handlePreferenceChange, handleEyecolorChange, handleSizeChange, handleBirthdateChange,
             handleSizeValidation, handleResidenceChange, handleFirstnameChange, handleSurnameChange,
             firstname, surname, gender, dateOfBirth, preference, eyeColor, size, residence} = this.props;
         return (
@@ -112,7 +112,8 @@ class Person extends Component {
                                 id="date"
                                 label="Geburtsdatum"
                                 type="date"
-                                defaultValue={dateOfBirth}
+                                value={dateOfBirth}
+                                onChange={event => handleBirthdateChange(event.target.value)}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}

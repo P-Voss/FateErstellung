@@ -48,6 +48,29 @@ export function pickClass(classId) {
     }
 }
 
-export function pickElement(elementId) {
-    return {type: 'PICK_ELEMENT', elementId: elementId}
+export function pickElement(id) {
+    return dispatch => {
+        dispatch({type: 'PICK_ELEMENT', elementId: id})
+        dispatch({type: 'POINTS'})
+    }
+}
+
+export function pickOdo(id) {
+    return dispatch => {
+        dispatch({type: 'PICK_ODO', odoId: id})
+        dispatch({type: 'POINTS'})
+    }
+}
+
+export function pickLuck(id) {
+    return dispatch => {
+        dispatch({type: 'PICK_LUCK', luckId: id})
+        dispatch({type: 'POINTS'})
+    }
+}
+export function pickCircuit(id) {
+    return dispatch => {
+        dispatch({type: 'PICK_CIRCUIT', circuitId: id})
+        dispatch({type: 'POINTS'})
+    }
 }

@@ -1,6 +1,8 @@
 
 import person from './Reducers/PersonReducer'
 import data from './Reducers/DataReducer'
+import creationPoints from './Reducers/PointsReducer'
+import choices from './Reducers/ChoicesReducer'
 
 const initialState = {
     steps: [
@@ -11,6 +13,7 @@ const initialState = {
         'Unterklasse'
     ],
     activeStep: 0,
+    creationPoints: 30,
     person: {
         firstname: '',
         surname: '',
@@ -26,7 +29,7 @@ const initialState = {
         attributes: {
             elements: [],
             odo: [],
-            circuit: [],
+            circuits: [],
             luck: []
         },
         traits: [],
@@ -44,21 +47,11 @@ const initialState = {
     }
 };
 
-function choices(state = {}, action) {
-    switch (action.type) {
-        case 'PICK_CLASS':
-            return {...state, class: action.classId}
-        case 'PICK_ELEMENT':
-            return {...state, attributes: {...state.attributes, element: action.elementId}}
-        default:
-            return state
-    }
-}
-
 export default function creationApp(state = initialState, action) {
     return {
         choices: choices(state.choices, action),
         person: person(state.person, action),
-        creationData: data(state.creationData, action)
+        creationData: data(state.creationData, action),
+        creationPoints: creationPoints(action, state.creationData, state.choices)
     }
 };

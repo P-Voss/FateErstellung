@@ -47,6 +47,7 @@ class App extends Component {
         this.handleResidenceChange = this.handleResidenceChange.bind(this)
         this.handleFirstnameChange = this.handleFirstnameChange.bind(this)
         this.handleSurnameChange = this.handleSurnameChange.bind(this)
+        this.handleBirthdateChange = this.handleBirthdateChange.bind(this)
         this.updateSize = this.updateSize.bind(this)
         this.props.dataActions.loadClasses()
     }
@@ -67,9 +68,13 @@ class App extends Component {
                 />
             case 2:
                 return <Attributes
+                    creationPoints={this.props.creationPoints}
                     attributesToChoose={this.props.creationData.attributes}
                     choices={this.props.choices.attributes}
                     handleElementChange={this.props.dataActions.pickElement}
+                    handleOdoChange={this.props.dataActions.pickOdo}
+                    handleLuckChange={this.props.dataActions.pickLuck}
+                    handleCircuitChange={this.props.dataActions.pickCircuit}
                 />
             case 3:
                 return <Advantages {...this.state} />
@@ -85,6 +90,7 @@ class App extends Component {
                                handleSizeChange={this.handleSizeChange}
                                handleSizeValidation={this.handleSizeValidation}
                                handleResidenceChange={this.handleResidenceChange}
+                               handleBirthdateChange={this.handleBirthdateChange}
                 />
         }
     }
@@ -113,6 +119,10 @@ class App extends Component {
         this.props.personActions.changeResidence(district)
     }
 
+    handleBirthdateChange(birthdate) {
+        this.props.personActions.changeBirthdate(birthdate)
+    }
+
     handleSizeChange(event) {
         this.updateSize(event.target.value)
     }
@@ -134,7 +144,6 @@ class App extends Component {
 
     render() {
         const {steps, activeStep} = this.state
-        console.log(this.props)
         return (
             <div className="App">
                 <header className="App-header">
