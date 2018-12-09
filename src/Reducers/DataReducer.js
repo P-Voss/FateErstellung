@@ -9,6 +9,9 @@ export default function DataReducer(state = {}, action) {
         case 'ATTRIBUTES_LOADED_SUCCESS':
             return {...state, attributes: action.attributes}
 
+        case 'TRAITS_LOADED_SUCCESS':
+            return {...state, traits: action.traits}
+
         default:
             return state;
     }

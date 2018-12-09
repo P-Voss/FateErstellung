@@ -28,10 +28,6 @@ const styles = {
 };
 
 class Class extends Component {
-    constructor(props) {
-        super(props)
-        this.pickClass = this.pickClass.bind(this)
-    }
     pickClass(id) {
         this.props.handleClassChange(id)
     }

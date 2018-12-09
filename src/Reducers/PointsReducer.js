@@ -15,7 +15,12 @@ export default function creationPoints(action, creationData = {}, choices = {}) 
             let entry = creationData.attributes.luck.find(element => element.id === choices.attributes.luck)
             costs.push(entry !== undefined ? entry.kosten : 0)
         }
-        console.log(costs)
+
+        let traitCosts = creationData.traits.filter(trait => {
+            return choices.traits.indexOf(trait.id) !== -1
+        }).map(trait => trait.kosten).reduce((prevCost, curCost) => curCost + prevCost, 0)
+        costs.push(traitCosts)
+        console.log(traitCosts)
         return points - costs.reduce((prevCost, curCost) => curCost + prevCost, 0)
     } else {
         return points

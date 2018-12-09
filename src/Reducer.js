@@ -35,7 +35,7 @@ const initialState = {
         traits: [],
     },
     choices: {
-        class: 0,
+        chosenClass: 0,
         traits: [],
         specificClass: 0,
         attributes: {

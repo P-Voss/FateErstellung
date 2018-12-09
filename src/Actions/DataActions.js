@@ -24,6 +24,28 @@ export function loadClasses() {
     }
 }
 
+export function loadTraits() {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_TRAITS_URL)
+            .then(
+                response => {
+                    console.log(response)
+                    if (response.data.success) {
+                        dispatch({type: 'TRAITS_LOADED_SUCCESS', traits: response.data.traits})
+                    } else {
+                        dispatch({type: 'TRAITS_LOADED_FAIL'});
+                    }
+                }
+            )
+            .catch(
+                error => {
+                    console.log(error)
+                    dispatch({type: 'TRAITS_LOADED_FAIL'});
+                }
+            )
+    }
+}
+
 export function pickClass(classId) {
     return dispatch => {
         dispatch ({
@@ -33,15 +55,15 @@ export function pickClass(classId) {
         return axios.get(process.env.REACT_APP_ATTRS_URL + "/class/" + classId)
             .then(
                 response => {
-                    console.log(response)
                     if (response.data.success) {
                         dispatch({type: 'ATTRIBUTES_LOADED_SUCCESS', attributes: response.data.attributes})
                     } else {
                         dispatch({type: 'ATTRIBUTES_LOADED_FAIL'});
                     }
+                    dispatch({type: 'POINTS'})
                 },
                 error => {
-                    console.log(error)
+                    dispatch({type: 'POINTS'})
                     dispatch({type: 'ATTRIBUTES_LOADED_FAIL'});
                 }
             );
@@ -71,6 +93,20 @@ export function pickLuck(id) {
 export function pickCircuit(id) {
     return dispatch => {
         dispatch({type: 'PICK_CIRCUIT', circuitId: id})
+        dispatch({type: 'POINTS'})
+    }
+}
+
+export function pickTrait(traitId) {
+    return dispatch => {
+        dispatch({type: 'PICK_TRAIT', id: traitId})
+        dispatch({type: 'POINTS'})
+    }
+}
+
+export function removeTrait(traitId) {
+    return dispatch => {
+        dispatch({type: 'REMOVE_TRAIT', id: traitId})
         dispatch({type: 'POINTS'})
     }
 }

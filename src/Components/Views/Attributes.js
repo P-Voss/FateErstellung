@@ -49,8 +49,14 @@ class Attributes extends Component {
         this.props.handleCircuitChange(id)
     }
     render() {
-        const {classes, attributesToChoose, choices, creationPoints} = this.props
+        const {classes, attributesToChoose, choices, creationPoints, chosenClass} = this.props
         const {elements, odo, luck, circuits} = attributesToChoose
+        let circuitElement
+        if (chosenClass === 1) {
+            circuitElement = <div className={classes.attrBlock}>
+                    <Circuit circuits={circuits} chosenCircuit={choices.circuit} onPick={circuitId => this.changeCircuit(circuitId)}/>
+                </div>
+        }
         return <div>
             <div className={classes.explBlock}>
                 <Typography className={classes.explanation} variant="body1">
@@ -76,9 +82,7 @@ class Attributes extends Component {
             <div className={classes.attrBlock}>
                 <Luck luck={luck} chosenLuck={choices.luck} onPick={luckId => this.changeLuck(luckId)}/>
             </div>
-            <div className={classes.attrBlock}>
-                <Circuit circuits={circuits} chosenCircuit={choices.circuit} onPick={circuitId => this.changeCircuit(circuitId)}/>
-            </div>
+            {circuitElement}
         </div>
     }
 }

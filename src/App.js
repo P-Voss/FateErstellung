@@ -5,7 +5,6 @@ import {bindActionCreators} from "redux"
 import Person from "./Components/Views/Person"
 import Class from "./Components/Views/Class"
 import Attributes from "./Components/Views/Attributes"
-import Advantages from "./Components/Views/Advantages"
 import Subclass from "./Components/Views/Subclass"
 
 import Stepper from "@material-ui/core/Stepper"
@@ -18,6 +17,7 @@ import * as personActions from "./Actions/PersonActions"
 import * as dataActions from "./Actions/DataActions"
 
 import "./App.css"
+import Traits from "./Components/Views/Traits"
 
 const PERSON_SIZES = {
     max: 210,
@@ -50,6 +50,7 @@ class App extends Component {
         this.handleBirthdateChange = this.handleBirthdateChange.bind(this)
         this.updateSize = this.updateSize.bind(this)
         this.props.dataActions.loadClasses()
+        this.props.dataActions.loadTraits()
     }
 
     handleStepChange(nextStep) {
@@ -62,7 +63,7 @@ class App extends Component {
     getStepContent(stepIndex) {
         switch (stepIndex) {
             case 1:
-                return <Class chosenClass={this.props.choices.class}
+                return <Class chosenClass={this.props.choices.chosenClass}
                             classesToChoose={this.props.creationData.classes}
                             handleClassChange={this.props.dataActions.pickClass}
                 />
@@ -71,13 +72,20 @@ class App extends Component {
                     creationPoints={this.props.creationPoints}
                     attributesToChoose={this.props.creationData.attributes}
                     choices={this.props.choices.attributes}
+                    chosenClass={this.props.choices.chosenClass}
                     handleElementChange={this.props.dataActions.pickElement}
                     handleOdoChange={this.props.dataActions.pickOdo}
                     handleLuckChange={this.props.dataActions.pickLuck}
                     handleCircuitChange={this.props.dataActions.pickCircuit}
                 />
             case 3:
-                return <Advantages {...this.state} />
+                return <Traits
+                    creationPoints={this.props.creationPoints}
+                    traits={this.props.creationData.traits}
+                    chosenTraits={this.props.choices.traits}
+                    onPick={this.props.dataActions.pickTrait}
+                    onRemove={this.props.dataActions.removeTrait}
+                />
             case 4:
                 return <Subclass {...this.state} />
             default:
