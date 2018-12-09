@@ -7,25 +7,30 @@ import creationApp from "./Reducer"
 import {createLogger} from "redux-logger"
 import {composeWithDevTools} from "redux-devtools-extension"
 
-// import throttle from "lodash/throttle"
-// import {loadStore, saveStore} from "./localStorage"
+import throttle from "lodash/throttle"
+import {loadStore, saveStore} from "./localStorage"
 
 const middleWare = []
 middleWare.push(thunkMiddleware)
 const loggerMiddleware = createLogger()
 middleWare.push(loggerMiddleware)
 
-// const localStore = loadStore()
+const localStore = loadStore()
 const store = createStore(
     creationApp,
-    // localStore,
+    localStore,
     composeWithDevTools(applyMiddleware(...middleWare))
 )
 
-// store.subscribe(throttle(() => {
-//     saveStore({
-//         person: store.getState().person
-//     })
-// }, 1000))
+store.subscribe(throttle(() => {
+    saveStore(
+        // store.getState()
+        {
+            person: store.getState().person,
+            choices: store.getState().choices,
+            // creationData: store.getState().creationData
+        }
+    )
+}, 1000))
 
 export default store
