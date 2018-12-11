@@ -4,7 +4,6 @@ import Grid from "@material-ui/core/Grid"
 import { withStyles } from '@material-ui/core/styles';
 
 import Trait, {STATUS_CHOSEN, STATUS_ENABLED, STATUS_DISABLED, STATUS_PREVIEW} from './Traits/Trait'
-import Popover from "@material-ui/core/Popover"
 
 const styles = {
     explanation: {
@@ -67,7 +66,7 @@ class Traits extends Component {
     }
     render() {
         const {traits, chosenTraits, creationPoints, classes} = this.props
-        let desc
+        const disabledTraitIds = findDisabledTraitIds(chosenTraits, traits)
         return <div>
             <div className={classes.explBlock}>
                 <Typography className={classes.explanation} variant="body1">
@@ -80,36 +79,22 @@ class Traits extends Component {
                 </Typography>
             </div>
             <div>
-                <Grid container spacing={16}>
+                <Grid container spacing={16} style={{overflowY: 'scroll', height: 400}}>
                     {traits.map((trait, key) => {
                         let status = STATUS_ENABLED
-                        if (this.state.disabledTraits.filter(disTrait => disTrait.id === trait.id ).length > 0) {
+                        if (disabledTraitIds.indexOf(trait.id) !== -1) {
                             status = STATUS_DISABLED
                         }
                         if (this.state.previewDisabledTraits.filter(prevTrait => prevTrait.id === trait.id).length > 0) {
                             status = STATUS_PREVIEW
                         }
-                        if (chosenTraits.filter(chosenTrait => chosenTrait === trait.id).length > 0) {
+                        if (chosenTraits.indexOf(trait.id) !== -1) {
                             status = STATUS_CHOSEN
-                        }
-                        if (this.state.hoveredTrait === trait.id) {
-                            const { anchorEl } = this.state;
-                            const open = Boolean(anchorEl);
-                            console.log(trait)
-                            desc = <Popover
-                                open={open}
-                                anchorEl={anchorEl}
-                                onClose={this.onMouseLeave}
-                            >
-                                {trait.beschreibung}
-                            </Popover>
                         }
                         return <Grid key={key} item>
                                 <Trait
                                     trait={trait}
                                     status={status}
-                                    onMouseEnter={this.onMouseEnter}
-                                    onMouseLeave={this.onMouseLeave}
                                     onPick={() => this.onPick(trait.id)}
                                     onRemove={() => this.onRemove(trait.id)}
                                 />
@@ -117,9 +102,17 @@ class Traits extends Component {
                     })}
                 </Grid>
             </div>
-            {desc}
         </div>
     }
+}
+
+function findDisabledTraitIds (chosenTraitIds, traits) {
+    let chosenTraits = traits.filter(trait => chosenTraitIds.indexOf(trait.id) !== -1)
+    const disabledTraitIds = []
+    chosenTraits.forEach(trait => {
+        trait.incompatibleTraits.forEach(id => disabledTraitIds.push(id))
+    })
+    return disabledTraitIds
 }
 
 export default withStyles(styles)(Traits)
