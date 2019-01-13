@@ -6,15 +6,23 @@ import Person from "./Components/Views/Person"
 import Class from "./Components/Views/Class"
 import Attributes from "./Components/Views/Attributes"
 import Subclass from "./Components/Views/Subclass"
+import Background from "./Components/Views/Background"
+import Intro from "./Components/Views/Intro"
 
 import Stepper from "@material-ui/core/Stepper"
 import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
 import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
 
 import * as personActions from "./Actions/PersonActions"
 import * as dataActions from "./Actions/DataActions"
+
+import personValidator from './Validators/Person'
+import attributeValidator from './Validators/Attributes'
+import classValidator from './Validators/Class'
+import traitValidator from './Validators/Traits'
+import traitDetailValidator from './Validators/TraitDetails'
+import subclassValidator from './Validators/Subclass'
 
 import "./App.css"
 import Traits from "./Components/Views/Traits"
@@ -29,11 +37,13 @@ class App extends Component {
         super(props)
         this.state = {
             steps: [
+                "Intro",
                 "Person",
                 "Klasse",
                 "Eigenschaften",
                 "Traits",
-                "Unterklasse"
+                "Unterklasse",
+                "Story"
             ],
             activeStep: 0
         }
@@ -62,12 +72,28 @@ class App extends Component {
 
     getStepContent(stepIndex) {
         switch (stepIndex) {
+            case 0:
+                return <Intro />
             case 1:
-                return <Class chosenClass={this.props.choices.chosenClass}
-                            classesToChoose={this.props.creationData.classes}
-                            handleClassChange={this.props.dataActions.pickClass}
+                return <Person
+                    {...this.props.person}
+                    handleFirstnameChange={this.handleFirstnameChange}
+                    handleSurnameChange={this.handleSurnameChange}
+                    handleEyecolorChange={this.handleEyecolorChange}
+                    handleGenderChange={this.handleGenderChange}
+                    handlePreferenceChange={this.handlePreferenceChange}
+                    handleSizeChange={this.handleSizeChange}
+                    handleSizeValidation={this.handleSizeValidation}
+                    handleResidenceChange={this.handleResidenceChange}
+                    handleBirthdateChange={this.handleBirthdateChange}
+                    onMount={this.props.dataActions.removeSubclass}
                 />
             case 2:
+                return <Class chosenClass={this.props.choices.chosenClass}
+                              classesToChoose={this.props.creationData.classes}
+                              handleClassChange={this.props.dataActions.pickClass}
+                />
+            case 3:
                 return <Attributes
                     creationPoints={this.props.creationPoints}
                     attributesToChoose={this.props.creationData.attributes}
@@ -78,27 +104,42 @@ class App extends Component {
                     handleLuckChange={this.props.dataActions.pickLuck}
                     handleCircuitChange={this.props.dataActions.pickCircuit}
                 />
-            case 3:
+            case 4:
                 return <Traits
                     creationPoints={this.props.creationPoints}
                     traits={this.props.creationData.traits}
                     chosenTraits={this.props.choices.traits}
+                    choices={this.props.choices}
                     onPick={this.props.dataActions.pickTrait}
                     onRemove={this.props.dataActions.removeTrait}
                 />
-            case 4:
-                return <Subclass {...this.state} />
+            case 5:
+                return <Subclass
+                    creationPoints={this.props.creationPoints}
+                    subclasses={this.props.creationData.subclasses}
+                    chosenClass={this.props.choices.subclass}
+                    onLoad={() => this.props.dataActions.loadSubclasses(this.props.choices)}
+                    onPick={this.props.dataActions.pickSubclass}
+                    onRemove={this.props.dataActions.removeSubclass}
+                />
+            case 6:
+                return <Background
+                    chosenTraits={this.props.choices.traits}
+                    traits={this.props.creationData.traits}
+                />
             default:
-                return <Person {...this.props.person}
-                               handleFirstnameChange={this.handleFirstnameChange}
-                               handleSurnameChange={this.handleSurnameChange}
-                               handleEyecolorChange={this.handleEyecolorChange}
-                               handleGenderChange={this.handleGenderChange}
-                               handlePreferenceChange={this.handlePreferenceChange}
-                               handleSizeChange={this.handleSizeChange}
-                               handleSizeValidation={this.handleSizeValidation}
-                               handleResidenceChange={this.handleResidenceChange}
-                               handleBirthdateChange={this.handleBirthdateChange}
+                return <Person
+                    {...this.props.person}
+                    handleFirstnameChange={this.handleFirstnameChange}
+                    handleSurnameChange={this.handleSurnameChange}
+                    handleEyecolorChange={this.handleEyecolorChange}
+                    handleGenderChange={this.handleGenderChange}
+                    handlePreferenceChange={this.handlePreferenceChange}
+                    handleSizeChange={this.handleSizeChange}
+                    handleSizeValidation={this.handleSizeValidation}
+                    handleResidenceChange={this.handleResidenceChange}
+                    handleBirthdateChange={this.handleBirthdateChange}
+                    onMount={this.props.dataActions.removeSubclass}
                 />
         }
     }
@@ -152,23 +193,18 @@ class App extends Component {
 
     render() {
         const {steps, activeStep} = this.state
+        let button
+        if (validateStep(activeStep, this.props.choices, this.props.person, this.props.creationPoints)) {
+            button = <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => this.handleStepChange(activeStep + 1)}
+                >
+                    {activeStep === steps.length - 1 ? "Finish" : "Weiter"}
+                </Button>
+        }
         return (
             <div className="App">
-                <header className="App-header">
-                    <Typography variant="headline">Neuen Charakter erstellen</Typography>
-                    <Typography variant="body1">
-                        In den folgenden Schritten werdet ihr in die Lage versetzt, einen Charakter für das Spiel zu
-                        erschaffen. Zuerst benötigen wir grundlegende Informationen für euren Charakter.
-                    </Typography>
-                    <Typography variant="body1">
-                        Wichtig: Die folgenden Angaben können in bestimmten Situationen das Spiel beeinflussen und sind
-                        nicht überflüssig.
-                    </Typography>
-                    <Typography variant="body1">
-                        Auf <a href="/index/intro">dieser Seite (Für Einsteiger)</a> kannst du dir von Kirei eine
-                        Einführung in die Welt des Nasuverse ansehen, um das Spiel ein wenig besser zu verstehen.
-                    </Typography>
-                </header>
                 <Stepper activeStep={activeStep} style={{backgroundColor: "#9cdce2"}}>
                     {steps.map((label, index) => {
                         const stepProps = {}
@@ -184,13 +220,7 @@ class App extends Component {
                 <div style={{marginBottom: "22px"}}>
                     {this.getStepContent(activeStep)}
                 </div>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => this.handleStepChange(activeStep + 1)}
-                >
-                    {activeStep === steps.length - 1 ? "Finish" : "Weiter"}
-                </Button>
+                {button}
             </div>
         )
     }
@@ -205,6 +235,28 @@ function mapDispatchToProps(dispatch) {
     return {
         personActions: bindActionCreators(personActions, dispatch),
         dataActions: bindActionCreators(dataActions, dispatch),
+    }
+}
+
+
+function validateStep(currentStep, choices = {}, person = {}, creationPoints) {
+    switch (currentStep) {
+        case 0:
+            return true
+        case 1:
+            return personValidator(person)
+        case 2:
+            return classValidator(choices)
+        case 3:
+            return attributeValidator(choices)
+        case 4:
+            return traitValidator(choices)
+        case 5:
+            return subclassValidator(choices, creationPoints)
+        case 6:
+            return traitDetailValidator(choices)
+        default:
+            return false
     }
 }
 
