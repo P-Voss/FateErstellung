@@ -9,7 +9,7 @@ const styles = {
         margin: "10px 0",
     },
     card: {
-        width: 180,
+        width: 220,
         height: 70,
         cursor: "pointer",
     },
@@ -63,7 +63,7 @@ class Trait extends Component {
                     {trait.bezeichnung}
                 </Typography>
                 <Typography className={classes.cardContent} variant={"body1"}>
-                    {trait.kosten} Erstellungspunkte
+                    {trait.kosten * -1} Erstellungspunkte
                 </Typography>
             </CardContent>
         </Card>

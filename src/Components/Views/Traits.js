@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid"
 import { withStyles } from '@material-ui/core/styles';
 
 import Trait, {STATUS_CHOSEN, STATUS_ENABLED, STATUS_DISABLED, STATUS_PREVIEW} from './Traits/Trait'
+import ChosenTraits from './Traits/ChosenTraits'
 
 const styles = {
     explanation: {
@@ -30,6 +31,10 @@ const styles = {
         lineHeight: "2em",
         color: 'inherit'
     },
+    traitContainer: {
+        overflowY: 'auto',
+        height: 500,
+    }
 };
 class Traits extends Component {
     constructor(props) {
@@ -39,18 +44,8 @@ class Traits extends Component {
             disabledTraits: [],
             previewDisabledTraits: [],
             disablingTraits: disablingTraits,
-            anchorEl: null,
-            hoveredTrait: 0,
         }
-        this.onMouseEnter = this.onMouseEnter.bind(this)
-        this.onMouseLeave = this.onMouseLeave.bind(this)
-    }
-    onMouseEnter(elem, traitId) {
-        this.setState({...this.state, anchorEl: elem, hoveredId: traitId})
-
-    }
-    onMouseLeave() {
-        this.setState({...this.state, anchorEl: null, hoveredId: 0})
+        this.onRemove = this.onRemove.bind(this)
     }
     onPick(traitId) {
         if (
@@ -70,7 +65,7 @@ class Traits extends Component {
         return <div>
             <div className={classes.explBlock}>
                 <Typography className={classes.explanation} variant="body1">
-                    In diesem Schritt dürft ihr euch 5 Traits entscheiden.
+                    In diesem Schritt dürft ihr euch für 5 Traits entscheiden.
                     Wählt sie am besten nach dem aus, was zu eurem Charakter passen würde, anstatt zu versuchen eine
                     möglichst effektive Kombination zu erhalten (nicht das daran etwas verkehrt wäre).
                 </Typography>
@@ -79,27 +74,46 @@ class Traits extends Component {
                 </Typography>
             </div>
             <div>
-                <Grid container spacing={16} style={{overflowY: 'scroll', height: 400}}>
-                    {traits.map((trait, key) => {
-                        let status = STATUS_ENABLED
-                        if (disabledTraitIds.indexOf(trait.id) !== -1) {
-                            status = STATUS_DISABLED
-                        }
-                        if (this.state.previewDisabledTraits.filter(prevTrait => prevTrait.id === trait.id).length > 0) {
-                            status = STATUS_PREVIEW
-                        }
-                        if (chosenTraits.indexOf(trait.id) !== -1) {
-                            status = STATUS_CHOSEN
-                        }
-                        return <Grid key={key} item>
-                                <Trait
-                                    trait={trait}
-                                    status={status}
-                                    onPick={() => this.onPick(trait.id)}
-                                    onRemove={() => this.onRemove(trait.id)}
-                                />
-                            </Grid>
-                    })}
+                <Grid container spacing={24}>
+                    <Grid item xs={8}>
+                        <Typography variant={"title"}>Ausgewählte Traits</Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Typography variant={"title"}>Verfügbare Traits</Typography>
+                    </Grid>
+                    <Grid item sm={8}>
+                        <Grid container spacing={8} className={classes.traitContainer}>
+                            <ChosenTraits
+                                traits={traits}
+                                chosenTraitIds={chosenTraits}
+                                onRemove={this.onRemove}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid item sm={4}>
+                        <Grid container spacing={16} className={classes.traitContainer}>
+                            {traits.map((trait, key) => {
+                                let status = STATUS_ENABLED
+                                if (disabledTraitIds.indexOf(trait.id) !== -1) {
+                                    status = STATUS_DISABLED
+                                }
+                                if (this.state.previewDisabledTraits.filter(prevTrait => prevTrait.id === trait.id).length > 0) {
+                                    status = STATUS_PREVIEW
+                                }
+                                if (chosenTraits.indexOf(trait.id) !== -1) {
+                                    status = STATUS_CHOSEN
+                                }
+                                return <Grid key={key} item>
+                                    <Trait
+                                        trait={trait}
+                                        status={status}
+                                        onPick={() => this.onPick(trait.id)}
+                                        onRemove={() => this.onRemove(trait.id)}
+                                    />
+                                </Grid>
+                            })}
+                        </Grid>
+                    </Grid>
                 </Grid>
             </div>
         </div>
@@ -114,5 +128,6 @@ function findDisabledTraitIds (chosenTraitIds, traits) {
     })
     return disabledTraitIds
 }
+
 
 export default withStyles(styles)(Traits)

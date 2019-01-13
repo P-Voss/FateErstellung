@@ -24,6 +24,35 @@ export function loadClasses() {
     }
 }
 
+export function loadSubclasses(choices) {
+    return dispatch => {
+        const data = new FormData();
+        data.append('circuit', choices.attributes.circuit);
+        data.append('luck', choices.attributes.luck);
+        data.append('odo', choices.attributes.odo);
+        data.append('element', choices.attributes.element);
+        data.append('traits', choices.traits);
+        data.append('class', choices.chosenClass);
+        return axios.post(process.env.REACT_APP_SUBCLASSES_URL,
+            data,
+            {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+            .then(
+                response => {
+                    console.log(response)
+                    if (response.data.success) {
+                        dispatch({type: 'SUBCLASS_LOADED_SUCCESS', subclasses: response.data.subclasses})
+                    } else {
+                        dispatch({type: 'SUBCLASS_LOADED_FAIL'});
+                    }
+                },
+                error => {
+                    console.log(error)
+                    dispatch({type: 'SUBCLASS_LOADED_FAIL'});
+                }
+            );
+    }
+}
+
 export function loadTraits() {
     return dispatch => {
         return axios.get(process.env.REACT_APP_TRAITS_URL)
@@ -107,6 +136,20 @@ export function pickTrait(traitId) {
 export function removeTrait(traitId) {
     return dispatch => {
         dispatch({type: 'REMOVE_TRAIT', id: traitId})
+        dispatch({type: 'POINTS'})
+    }
+}
+
+export function pickSubclass(classId) {
+    return dispatch => {
+        dispatch({type: 'PICK_SUBCLASS', id: classId})
+        dispatch({type: 'POINTS'})
+    }
+}
+
+export function removeSubclass() {
+    return dispatch => {
+        dispatch({type: 'REMOVE_SUBCLASS'})
         dispatch({type: 'POINTS'})
     }
 }

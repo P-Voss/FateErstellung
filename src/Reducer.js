@@ -33,11 +33,12 @@ const initialState = {
             luck: []
         },
         traits: [],
+        subclasses: [],
     },
     choices: {
         chosenClass: 0,
         traits: [],
-        specificClass: 0,
+        subclass: 0,
         attributes: {
             element: 0,
             odo: 0,
