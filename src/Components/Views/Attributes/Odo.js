@@ -8,6 +8,7 @@ import CardActions from "@material-ui/core/CardActions/CardActions"
 import Grid from "@material-ui/core/Grid"
 
 import ChoiceButton from './../Helper/ChoiceButton'
+import CardHeader from "@material-ui/core/CardHeader"
 
 const styles = {
     explanation: {
@@ -45,19 +46,24 @@ const Odo = ({chosenOdo, classes = {}, odo = [], onPick = () => {}}) => {
                     }
                     let raised = chosenOdo === odoCategory.id
                     let actions
+                    let cost = "Nur per Trait erreichbar"
                     if (odoCategory.kosten !== null) {
                         actions = <ChoiceButton isActive={odoCategory.id === chosenOdo} onPick={() => onPick(odoCategory.id)}/>
+                        if (odoCategory.kosten >= 0) {
+                            cost = "Kostet: " + odoCategory.kosten + " Erstellungspunkte"
+                        } else {
+                            cost = "Erstattet: " + (odoCategory.kosten * -1) + " Erstellungspunkte"
+                        }
                     }
                     return <Grid key={key} item>
                         <Card raised={raised} className={cardClasses.join(' ')}>
+                            <CardHeader
+                                className={classes.header}
+                                title={"Kategorie: " + odoCategory.kategorie}
+                                subheader={cost}
+                            />
                             <CardContent className={classes.cardContent}>
-                                <Typography variant={"h5"} className={classes.cardContent}>Kategorie: {odoCategory.kategorie}</Typography>
                                 <Typography variant={"body1"} className={classes.cardContent}>{odoCategory.amount}</Typography>
-                                {
-                                    odoCategory.kosten !== null
-                                        ? <Typography variant={"body1"} className={classes.cardContent}>Kostet: {odoCategory.kosten} Erstellungspunkte</Typography>
-                                        : <Typography variant={"body1"} className={classes.cardContent}>Nur per Trait</Typography>
-                                }
                             </CardContent>
                             <CardActions>
                                 {actions}

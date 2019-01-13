@@ -6,6 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
+import CardHeader from "@material-ui/core/CardHeader"
 
 const styles = {
     explanation: {
@@ -49,8 +50,10 @@ class Class extends Component {
                 let buttonDisabled = chosenClass === classData.id
                 let buttonColor = chosenClass !== classData.id ? 'primary' : 'secondary'
                 return (<Card raised={raised} key={key} className={cardClasses.join(' ')}>
+                    <CardHeader
+                        title={classData.bezeichnung}
+                    />
                     <CardContent>
-                        <Typography variant={"h5"} className={classes.cardContent}>{classData.bezeichnung}</Typography>
                         <Typography className={classes.cardContent}>{classData.beschreibung}</Typography>
                     </CardContent>
                     <CardActions>

@@ -3,11 +3,11 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Typography from "@material-ui/core/Typography/Typography"
 import Card from "@material-ui/core/Card/Card"
-import CardContent from "@material-ui/core/CardContent/CardContent"
 import CardActions from "@material-ui/core/CardActions/CardActions"
 import Grid from "@material-ui/core/Grid"
 
 import ChoiceButton from './../Helper/ChoiceButton'
+import CardHeader from "@material-ui/core/CardHeader"
 
 const styles = {
     explanation: {
@@ -47,10 +47,11 @@ const Element = ({chosenElement, classes = {}, elements = [], onPick = () => {}}
                         let actions = <ChoiceButton isActive={chosenElement === element.id} onPick={() => onPick(element.id)}/>
                         return <Grid key={key} item>
                             <Card raised={raised}  className={cardClasses.join(' ')}>
-                                <CardContent className={classes.cardContent}>
-                                    <Typography variant={"h5"} className={classes.cardContent}>{element.bezeichnung}</Typography>
-                                    <Typography variant={"body1"} className={classes.cardContent}>{element.charakterisierung}</Typography>
-                                </CardContent>
+                                <CardHeader
+                                    className={classes.header}
+                                    title={element.bezeichnung}
+                                    subheader={element.charakterisierung}
+                                />
                                 <CardActions>
                                     {actions}
                                 </CardActions>

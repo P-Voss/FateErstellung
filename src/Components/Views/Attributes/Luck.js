@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography/Typography"
 import Card from "@material-ui/core/Card/Card"
 import CardContent from "@material-ui/core/CardContent/CardContent"
 import CardActions from "@material-ui/core/CardActions/CardActions"
+import CardHeader from "@material-ui/core/CardHeader"
 import Grid from "@material-ui/core/Grid"
 
 import ChoiceButton from './../Helper/ChoiceButton'
@@ -40,19 +41,24 @@ const Luck = ({chosenLuck, classes = {}, luck = [], onPick = () => {}}) => {
                     }
                     let raised = chosenLuck === luckCategory.id
                     let actions
+                    let cost = "Nur per Trait erreichbar"
                     if (luckCategory.kosten !== null) {
                         actions = <ChoiceButton isActive={luckCategory.id === chosenLuck} onPick={() => onPick(luckCategory.id)}/>
+                        if (luckCategory.kosten >= 0) {
+                            cost = "Kostet: " + luckCategory.kosten + " Erstellungspunkte"
+                        } else {
+                            cost = "Erstattet: " + (luckCategory.kosten * -1) + " Erstellungspunkte"
+                        }
                     }
                     return <Grid key={key} item>
                         <Card raised={raised}  key={key} className={cardClasses.join(' ')}>
+                            <CardHeader
+                                className={classes.header}
+                                title={"Kategorie: " + luckCategory.kategorie}
+                                subheader={cost}
+                            />
                             <CardContent className={classes.cardContent}>
-                                <Typography variant={"h5"} className={classes.cardContent}>Kategorie: {luckCategory.kategorie}</Typography>
                                 <Typography variant={"body1"} className={classes.cardContent}>{luckCategory.amount}</Typography>
-                                {
-                                    luckCategory.kosten !== null
-                                        ? <Typography variant={"body1"} className={classes.cardContent}>Kostet: {luckCategory.kosten} Erstellungspunkte</Typography>
-                                        : <Typography variant={"body1"} className={classes.cardContent}>Nur per Trait</Typography>
-                                }
                             </CardContent>
                             <CardActions>
                                 {actions}
