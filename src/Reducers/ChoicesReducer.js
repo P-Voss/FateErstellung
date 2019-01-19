@@ -24,6 +24,8 @@ export default function choices(state = {}, action) {
             return {...state, subclass: action.id}
         case 'REMOVE_SUBCLASS':
             return {...state, subclass: 0}
+        case 'SUBCLASS_LOADED_SUCCESS':
+            return {...state, subclass: 0}
 
         default:
             return state

@@ -6,23 +6,17 @@ import Person from "./Components/Views/Person"
 import Class from "./Components/Views/Class"
 import Attributes from "./Components/Views/Attributes"
 import Subclass from "./Components/Views/Subclass"
-import Background from "./Components/Views/Background"
+// import Background from "./Components/Views/Background"
 import Intro from "./Components/Views/Intro"
+import StepButton from "./Components/Views/StepButton"
 
 import Stepper from "@material-ui/core/Stepper"
 import Step from "@material-ui/core/Step"
 import StepLabel from "@material-ui/core/StepLabel"
-import Button from "@material-ui/core/Button"
 
 import * as personActions from "./Actions/PersonActions"
 import * as dataActions from "./Actions/DataActions"
-
-import personValidator from './Validators/Person'
-import attributeValidator from './Validators/Attributes'
-import classValidator from './Validators/Class'
-import traitValidator from './Validators/Traits'
-import traitDetailValidator from './Validators/TraitDetails'
-import subclassValidator from './Validators/Subclass'
+import * as creationActions from "./Actions/CreationActions"
 
 import "./App.css"
 import Traits from "./Components/Views/Traits"
@@ -43,7 +37,7 @@ class App extends Component {
                 "Eigenschaften",
                 "Traits",
                 "Unterklasse",
-                "Story"
+                // "Story"
             ],
             activeStep: 0
         }
@@ -61,13 +55,22 @@ class App extends Component {
         this.updateSize = this.updateSize.bind(this)
         this.props.dataActions.loadClasses()
         this.props.dataActions.loadTraits()
+        this.props.dataActions.loadAttributes()
     }
 
     handleStepChange(nextStep) {
-        this.setState({
-            ...this.state,
-            "activeStep": nextStep
-        })
+        if (nextStep === this.state.steps.length) {
+            this.props.creationActions.createCharacter(
+                this.props.person,
+                this.props.choices,
+                this.props.creationData.subclasses
+            )
+        } else {
+            this.setState({
+                ...this.state,
+                "activeStep": nextStep
+            })
+        }
     }
 
     getStepContent(stepIndex) {
@@ -121,11 +124,6 @@ class App extends Component {
                     onLoad={() => this.props.dataActions.loadSubclasses(this.props.choices)}
                     onPick={this.props.dataActions.pickSubclass}
                     onRemove={this.props.dataActions.removeSubclass}
-                />
-            case 6:
-                return <Background
-                    chosenTraits={this.props.choices.traits}
-                    traits={this.props.creationData.traits}
                 />
             default:
                 return <Person
@@ -193,16 +191,13 @@ class App extends Component {
 
     render() {
         const {steps, activeStep} = this.state
-        let button
-        if (validateStep(activeStep, this.props.choices, this.props.person, this.props.creationPoints)) {
-            button = <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => this.handleStepChange(activeStep + 1)}
-                >
-                    {activeStep === steps.length - 1 ? "Finish" : "Weiter"}
-                </Button>
-        }
+        let button = (<StepButton
+                lastStep={activeStep === steps.length - 1}
+                activeStep={activeStep}
+                {...this.props}
+                onClick={() => this.handleStepChange(activeStep + 1)}
+            />
+        )
         return (
             <div className="App">
                 <Stepper activeStep={activeStep} style={{backgroundColor: "#9cdce2"}}>
@@ -223,7 +218,7 @@ class App extends Component {
                 {button}
             </div>
         )
-    }
+}
 }
 
 
@@ -235,30 +230,10 @@ function mapDispatchToProps(dispatch) {
     return {
         personActions: bindActionCreators(personActions, dispatch),
         dataActions: bindActionCreators(dataActions, dispatch),
+        creationActions: bindActionCreators(creationActions, dispatch),
     }
 }
 
-
-function validateStep(currentStep, choices = {}, person = {}, creationPoints) {
-    switch (currentStep) {
-        case 0:
-            return true
-        case 1:
-            return personValidator(person)
-        case 2:
-            return classValidator(choices)
-        case 3:
-            return attributeValidator(choices)
-        case 4:
-            return traitValidator(choices)
-        case 5:
-            return subclassValidator(choices, creationPoints)
-        case 6:
-            return traitDetailValidator(choices)
-        default:
-            return false
-    }
-}
 
 export default connect(
     mapStateToProps,

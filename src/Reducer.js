@@ -3,6 +3,7 @@ import person from './Reducers/PersonReducer'
 import data from './Reducers/DataReducer'
 import creationPoints from './Reducers/PointsReducer'
 import choices from './Reducers/ChoicesReducer'
+import system from './Reducers/SystemReducer'
 
 const initialState = {
     steps: [
@@ -14,6 +15,11 @@ const initialState = {
     ],
     activeStep: 0,
     creationPoints: 30,
+    system: {
+        loading: false,
+        success: false,
+        error: '',
+    },
     person: {
         firstname: '',
         surname: '',
@@ -50,6 +56,7 @@ const initialState = {
 
 export default function creationApp(state = initialState, action) {
     return {
+        system: system(state.system, action),
         choices: choices(state.choices, action),
         person: person(state.person, action),
         creationData: data(state.creationData, action),

@@ -63,8 +63,8 @@ class Person extends Component {
                                             value={gender}
                                             onChange={handleGenderChange}
                                         >
-                                            <FormControlLabel value="female" control={<Radio/>} label="Weiblich"/>
-                                            <FormControlLabel value="male" control={<Radio/>} label="Männlich"/>
+                                            <FormControlLabel value="w" control={<Radio/>} label="Weiblich"/>
+                                            <FormControlLabel value="m" control={<Radio/>} label="Männlich"/>
                                         </RadioGroup>
                                     </Grid>
                                 </Grid>
@@ -81,9 +81,9 @@ class Person extends Component {
                                     <MenuItem value="">
                                         <em>Bitte auswählen..</em>
                                     </MenuItem>
-                                    <MenuItem value="hetero">Heterosexuell</MenuItem>
-                                    <MenuItem value="homo">Homosexuell</MenuItem>
-                                    <MenuItem value="bi">Bisexuell</MenuItem>
+                                    <MenuItem value="Heterosexuell">Heterosexuell</MenuItem>
+                                    <MenuItem value="Homosexuell">Homosexuell</MenuItem>
+                                    <MenuItem value="Bisexuell">Bisexuell</MenuItem>
                                 </Select>
                                 <FormHelperText>
                                     Hat Auswirkungen auf die Liebes-Regel sowie Charme-Magien.
@@ -133,15 +133,15 @@ class Person extends Component {
                                     <MenuItem value="">
                                         <em>Bitte auswählen..</em>
                                     </MenuItem>
-                                    <MenuItem value="blue">Blau</MenuItem>
-                                    <MenuItem value="yellow">Grün</MenuItem>
-                                    <MenuItem value="grey">Grau</MenuItem>
-                                    <MenuItem value="brown">Braun</MenuItem>
-                                    <MenuItem value="black">Schwarz</MenuItem>
-                                    <MenuItem value="red">Rot</MenuItem>
-                                    <MenuItem value="yellow">Gelb</MenuItem>
-                                    <MenuItem value="purple">Lila</MenuItem>
-                                    <MenuItem value="turquoise">Türkis</MenuItem>
+                                    <MenuItem value="Blau">Blau</MenuItem>
+                                    <MenuItem value="Grün">Grün</MenuItem>
+                                    <MenuItem value="Grau">Grau</MenuItem>
+                                    <MenuItem value="Braun">Braun</MenuItem>
+                                    <MenuItem value="Schwarz">Schwarz</MenuItem>
+                                    <MenuItem value="Rot">Rot</MenuItem>
+                                    <MenuItem value="Gelb">Gelb</MenuItem>
+                                    <MenuItem value="Lila">Lila</MenuItem>
+                                    <MenuItem value="Türkis">Türkis</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>

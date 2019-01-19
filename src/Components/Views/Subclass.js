@@ -58,14 +58,18 @@ class Subclass extends Component {
                     }
                     let raised = chosenClass === subclass.id
                     let buttonDisabled = chosenClass === subclass.id
+                    const changesName = subclass.familienname !== null ?
+                        <CardContent>Ändert den Nachnamen zu: {subclass.familienname}</CardContent>
+                        : ''
                     return (
                         <Grid key={subclass.id} item sm={6}>
                             <Card raised={raised} className={cardClasses.join(' ')}>
                                 <CardHeader
-                                    classes={classes.header}
+                                    className={classes.header}
                                     title={subclass.bezeichnung}
                                     subheader={"Kostet: " + subclass.kosten + " Erstellungspunkte"}
                                 />
+                                {changesName}
                                 <CardContent className={classes.cardContent}>
                                     {subclass.beschreibung}
                                 </CardContent>

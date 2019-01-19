@@ -75,13 +75,9 @@ export function loadTraits() {
     }
 }
 
-export function pickClass(classId) {
+export function loadAttributes() {
     return dispatch => {
-        dispatch ({
-            type: 'PICK_CLASS',
-            classId: classId
-        })
-        return axios.get(process.env.REACT_APP_ATTRS_URL + "/class/" + classId)
+        return axios.get(process.env.REACT_APP_ATTRS_URL)
             .then(
                 response => {
                     if (response.data.success) {
@@ -96,6 +92,16 @@ export function pickClass(classId) {
                     dispatch({type: 'ATTRIBUTES_LOADED_FAIL'});
                 }
             );
+    }
+}
+
+export function pickClass(classId) {
+    return dispatch => {
+        dispatch ({
+            type: 'PICK_CLASS',
+            classId: classId
+        })
+        dispatch({type: 'POINTS'})
     }
 }
 
