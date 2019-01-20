@@ -5,27 +5,31 @@
   "dependencies": {
     "@material-ui/core": "^3.1.0",
     "axios": "^0.18.0",
-    "dotenv": "^6.1.0",
-    "lodash": "latest",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.1.0",
-    "react-scripts": "^2.0.0",
     "redux": "^4.0.1",
-    "redux-devtools-extension": "^2.13.5",
-    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-dev": "cp development.env .env && react-scripts build",
+    "build-test": "cp test.env .env && react-scripts build",
+    "build-prod": "cp production.env .env && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "defaults",
+    "not dead"
+  ],
+  "devDependencies": {
+    "webpack-bundle-analyzer": "^3.0.3",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-logger": "^3.0.6",
+    "lodash": "latest",
+    "react-scripts": "^2.0.0",
+    "dotenv": "^6.1.0"
+  }
 }
