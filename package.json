@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.1.0",
     "axios": "^0.18.0",
+    "env-cmd": "^8.0.2",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-redux": "^5.1.0",
@@ -12,11 +13,11 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd development.env react-scripts start",
     "build": "react-scripts build",
-    "build-dev": "cp development.env .env && react-scripts build",
-    "build-test": "cp test.env .env && react-scripts build",
-    "build-prod": "cp production.env .env && react-scripts build",
+    "build:dev": "env-cmd development.env npm run build",
+    "build-test": "env-cmd test.env npm build",
+    "build-prod": "env-cmd production.env npm build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
