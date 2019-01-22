@@ -18,7 +18,6 @@ import * as personActions from "./Actions/PersonActions"
 import * as dataActions from "./Actions/DataActions"
 import * as creationActions from "./Actions/CreationActions"
 
-import "./App.css"
 import Traits from "./Components/Views/Traits"
 
 const PERSON_SIZES = {

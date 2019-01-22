@@ -29,7 +29,7 @@ class Person extends Component {
                 <h2>Dein Charakter</h2>
                 <Grid container>
                     <Grid container spacing={8}>
-                        <Grid item xs={10} sm={5}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 label="Vorname"
                                 helperText="Der Vorname hat keine Auswirkungen auf das Spiel."
@@ -37,7 +37,7 @@ class Person extends Component {
                                 onChange={handleFirstnameChange}
                             />
                         </Grid>
-                        <Grid item xs={10} sm={5}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 label="Nachname"
                                 helperText="Solltet ihr später einem Clan beitreten, wird euer Nachname mit dem Namen des Clans ersetzt dem ihr angehört."
@@ -47,16 +47,16 @@ class Person extends Component {
                         </Grid>
                     </Grid>
                     <Grid container style={{marginTop: '20px'}}>
-                        <Grid item xs={10} sm={5}>
+                        <Grid item xs={10} sm={6}>
                             <FormControl component="fieldset">
                                 <Grid container spacing={8}>
-                                    <Grid item xs={6} sm={5}>
+                                    <Grid item xs={6} sm={6}>
                                         <FormLabel component="legend">Geschlecht</FormLabel>
                                         <FormHelperText>
                                             Hat Auswirkungen auf die Liebes-Regel sowie Charme-Magien.
                                         </FormHelperText>
                                     </Grid>
-                                    <Grid item xs={6} sm={5}>
+                                    <Grid item xs={6} sm={6}>
                                         <RadioGroup
                                             aria-label="gender"
                                             name="gender"
@@ -70,7 +70,7 @@ class Person extends Component {
                                 </Grid>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={10} sm={5}>
+                        <Grid item xs={10} sm={6}>
                             <FormControl>
                                 <InputLabel htmlFor="age-helper">Sexualität</InputLabel>
                                 <Select
@@ -121,7 +121,7 @@ class Person extends Component {
                         </Grid>
                     </Grid>
                     <Grid container spacing={8} style={{marginTop: '20px'}}>
-                        <Grid item xs={6} sm={5}>
+                        <Grid item xs={6} sm={6}>
                             <FormControl>
                                 <InputLabel htmlFor="eyes-helper">Augenfarbe</InputLabel>
                                 <Select
@@ -145,7 +145,7 @@ class Person extends Component {
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Grid item xs={10} sm={5}>
+                        <Grid item xs={10} sm={6}>
                             <TextField
                                 id="number"
                                 label="Körpergröße"
@@ -160,7 +160,7 @@ class Person extends Component {
                         </Grid>
                     </Grid>
                     <Grid container style={{marginTop: '20px'}}>
-                        <Grid item xs={12} sm={5}>
+                        <Grid item xs={12} sm={6}>
                             <FormLabel>
                                 Wohnort
                             </FormLabel>
@@ -168,7 +168,7 @@ class Person extends Component {
                                 Ort und Art der Wohnung des Charakters
                             </FormHelperText>
                         </Grid>
-                        <Grid item xs={6} sm={5}>
+                        <Grid item xs={6} sm={6}>
                             <TextField label="Stadtteil" value={residence} disabled={true} />
                             <City residence={residence} handleResidenceChange={handleResidenceChange} />
                         </Grid>

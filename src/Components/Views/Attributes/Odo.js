@@ -15,7 +15,7 @@ const styles = {
         margin: '10px 0',
     },
     odoCard: {
-        width: 250
+        width: 310
     },
     chosen: {
         background: 'linear-gradient(to right, #065274, #DE5952)',
@@ -38,7 +38,7 @@ const Odo = ({chosenOdo, classes = {}, odo = [], onPick = () => {}}) => {
             F ist der schlechteste, A der beste Wert.
         </Typography>
         <div>
-            <Grid container spacing={8}>
+            <Grid container spacing={16}>
                 {odo.map((odoCategory, key) => {
                     let cardClasses = [classes.odoCard]
                     if (chosenOdo === odoCategory.id) {

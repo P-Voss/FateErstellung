@@ -14,7 +14,7 @@ const styles = {
         margin: '10px 0',
     },
     elementCard: {
-        width: 193
+        width: 160
     },
     chosen: {
         background: 'linear-gradient(to right, #065274, #DE5952)',
@@ -37,7 +37,7 @@ const Element = ({chosenElement, classes = {}, elements = [], onPick = () => {}}
                 Bedeutung, da alle Magien die das eigene Naturelement in sich tragen 10% weniger FP kosten.
             </Typography>
             <div>
-                <Grid container spacing={8}>
+                <Grid container spacing={16}>
                     {elements.map((element, key) => {
                         let cardClasses = [classes.card, classes.elementCard]
                         if (chosenElement === element.id) {

@@ -15,7 +15,7 @@ const styles = {
         margin: '10px 0',
     },
     LuckCard: {
-        width: 250
+        width: 310
     },
     chosen: {
         background: 'linear-gradient(to right, #065274, #DE5952)',
@@ -33,7 +33,7 @@ const Luck = ({chosenLuck, classes = {}, luck = [], onPick = () => {}}) => {
             Glück
         </Typography>
         <div>
-            <Grid container spacing={8}>
+            <Grid container spacing={16}>
                 {luck.map((luckCategory, key) => {
                     let cardClasses = [classes.LuckCard]
                     if (chosenLuck === luckCategory.id) {

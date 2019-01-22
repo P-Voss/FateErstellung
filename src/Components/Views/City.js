@@ -7,9 +7,6 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
-
-// import Image from '../../images/Map/FuyukiHell.jpg';
-
 import { PlacesOfInterest, Districts } from '../../images/SVG/Places'
 
 const Image = process.env.REACT_APP_MAP_IMAGE_URL

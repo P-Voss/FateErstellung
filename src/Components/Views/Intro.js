@@ -12,7 +12,7 @@ const styles = {}
 export default withStyles(styles)(() => {
     return (
         <div>
-            <Typography variant="headline">Herzlichen Willkommen in der Erstellung deines Fate-Charakters!</Typography>
+            <Typography variant="headline">Herzlich Willkommen in der Erstellung deines Fate-Charakters!</Typography>
             <Typography variant="body1">
                 Nimm dir beim Ausfüllen der auf den nächsten Seiten angegebenen Felder ruhig Zeit,
                 denn die meisten gewählten Eigenschaften können im Nachhinein nicht mehr geändert werden.
