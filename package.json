@@ -16,8 +16,8 @@
     "start": "env-cmd development.env react-scripts start",
     "build": "react-scripts build",
     "build:dev": "env-cmd development.env npm run build",
-    "build-test": "env-cmd test.env npm build",
-    "build-prod": "env-cmd production.env npm build",
+    "build:test": "env-cmd test.env npm run build",
+    "build:prod": "env-cmd production.env npm run build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
