@@ -14,7 +14,8 @@ const styles = {
         margin: '10px 0',
     },
     elementCard: {
-        width: 160
+        width: 160,
+        height: '100%',
     },
     chosen: {
         background: 'linear-gradient(to right, #065274, #DE5952)',
@@ -24,6 +25,9 @@ const styles = {
         lineHeight: "2em",
         color: 'inherit'
     },
+    header: {
+        height: 112,
+    }
 };
 
 const Element = ({chosenElement, classes = {}, elements = [], onPick = () => {}}) => {

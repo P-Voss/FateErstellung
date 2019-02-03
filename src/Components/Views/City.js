@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
 
 import Modal from '@material-ui/core/Modal';
+import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
 import { PlacesOfInterest, Districts } from '../../images/SVG/Places'
+import Card from "@material-ui/core/es/Card/Card"
+import CardHeader from "@material-ui/core/es/CardHeader/CardHeader"
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const Image = process.env.REACT_APP_MAP_IMAGE_URL
 
@@ -66,7 +70,8 @@ class Map extends Component {
             hoveredDistrict: '',
             hoveredPlace: '',
             modalOpen: false,
-            anchorEl: null
+            anchorEl: null,
+            anchorDistrict: null,
         };
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -88,52 +93,37 @@ class Map extends Component {
         });
         this.props.handleResidenceChange(districtName);
     }
-    handleHoverDistrict(districtName) {
+    handleHoverDistrict(event, districtName) {
         if (districtName !== this.state.activeDistrict) {
             this.setState({
-                ...this.state, hoveredDistrict: districtName
+                ...this.state, hoveredDistrict: districtName, anchorDistrict: event.target
             });
         }
     }
     handleUnhoverDistrict(districtName) {
         this.setState({
-            ...this.state, hoveredDistrict: ''
+            ...this.state, hoveredDistrict: '', anchorDistrict: null
         });
     }
     handleHoverPlace(event, place) {
         this.setState({ ...this.state, anchorEl: event.target, hoveredPlace: place });
     }
     handleUnhoverPlace() {
-        this.setState({ ...this.state, anchorEl: null, hoveredPlace: null });
+        this.setState({ ...this.state, anchorEl: null, hoveredPlace: ''});
     }
 
     render() {
-        const { hoveredDistrict, activeDistrict, hoveredPlace, anchorEl } = this.state;
-        const open = !!anchorEl;
-        const { classes } = this.props;
+        const { hoveredDistrict, activeDistrict, hoveredPlace, anchorEl, anchorDistrict } = this.state;
+        const { classes, districts, attractions } = this.props;
+        let popover
+        if (hoveredPlace !== '') {
+            popover = attractionPopOver(classes, anchorEl, hoveredPlace, this.handleUnhoverPlace, attractions)
+        } else {
+            popover = districtPopOver(classes, anchorDistrict, hoveredDistrict, this.handleUnhoverDistrict, districts)
+        }
         return (
             <React.Fragment>
                 <Button onClick={this.handleOpen}>Karte öffnen</Button>
-                <Popover
-                    className={classes.popover}
-                    classes={{
-                        paper: classes.paper,
-                    }}
-                    open={open}
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                    onClose={this.handleUnhoverPlace}
-                    disableRestoreFocus
-                >
-                    <Typography>I use Popover.</Typography>
-                </Popover>
                 <Modal
                     className={classes.Modal}
                     aria-labelledby="simple-modal-title"
@@ -142,6 +132,7 @@ class Map extends Component {
                     onClose={this.handleClose}
                 >
                     <div style={{width: 1371, height: 600, backgroundImage: `url(${Image})`}}>
+                        {popover}
                         <svg width="1371" height="600" id="overlay" >
                             <defs>
                                 <filter id="svg_14_blur">
@@ -160,7 +151,7 @@ class Map extends Component {
                                     return (
                                         <path key={key} id={element.name} d={element.data}
                                             onClick={() => this.handleChooseDistrict(element.name)}
-                                            onMouseOver={() => this.handleHoverDistrict(element.name)}
+                                            onMouseOver={(e) => this.handleHoverDistrict(e, element.name)}
                                             onMouseLeave={() => this.handleUnhoverDistrict(element.name)}
                                             className={className}
                                             strokeWidth="5" stroke="#000000" />
@@ -184,6 +175,72 @@ class Map extends Component {
             </React.Fragment>
         )
     }
+}
+
+function attractionPopOver(classes = {}, anchorEl, hoveredPlace, handlePopoverClose = () => {}, attractions = {}) {
+    const open = !!anchorEl;
+    if (!open) {
+        return null
+    }
+
+    let hoveredAttraction = attractions[hoveredPlace]
+    return getPopover(classes, open, anchorEl, hoveredAttraction.img, hoveredAttraction.Name, hoveredAttraction.Beschreibung, handlePopoverClose)
+}
+
+function districtPopOver(classes = {}, anchorEl, district, handlePopoverClose = () => {}, districts = {}) {
+    const open = !!anchorEl;
+    if (!open) {
+        return null
+    }
+    let hoveredDistrict
+    districts.forEach(districtData => {
+        if (districtData.name === district) {
+            hoveredDistrict = districtData
+        }
+    })
+    return getPopover(classes, open, anchorEl, hoveredDistrict.img, hoveredDistrict.name, hoveredDistrict.beschreibung, handlePopoverClose, hoveredDistrict.bewohner)
+}
+
+function getPopover(classes = {}, open, anchorEl, img, name, descr, handlePopoverClose = () => {}, residentsCount = null) {
+    let residents
+    if (residentsCount !== null) {
+        residents = <CardContent>Spielercharaktere: {residentsCount}</CardContent>
+    }
+    return (
+        <Popover
+            id="mouse-over-popover"
+            className={classes.popover}
+            open={open}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+            }}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+        >
+            <Paper
+                className={classes.paper}
+                style={{width: 300}}
+            >
+                <Card>
+                    <CardMedia
+                        image={process.env.REACT_APP_MAP_IMAGES_BASE_URL + img + ".png"}
+                        style={{height: 50, width: 70}}
+                        title={name}
+                    />
+                    <CardHeader title={name}/>
+                    <CardContent>
+                        {descr}
+                    </CardContent>
+                    {residents }
+                </Card>
+            </Paper>
+        </Popover>)
 }
 
 Map.propTypes = {

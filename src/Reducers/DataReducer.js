@@ -15,6 +15,9 @@ export default function DataReducer(state = {}, action) {
         case 'SUBCLASS_LOADED_SUCCESS':
             return {...state, subclasses: action.subclasses}
 
+        case 'PLACES_LOADED_SUCCESS':
+            return {...state, districts: action.districts, attractions: action.attractions}
+
         default:
             return state;
     }

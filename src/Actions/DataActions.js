@@ -4,6 +4,25 @@ import axios from 'axios';
 export const LOAD_CLASSES = 'LOAD_CLASSES'
 export const CHOOSE_CLASS = 'CHOOSE_CLASS'
 
+export function loadPlaces() {
+    return dispatch => {
+        return axios.get(process.env.REACT_APP_MAP_PLACES_DATA_URL)
+            .then(
+                response => {
+                    if (response.data.success) {
+                        dispatch({type: 'PLACES_LOADED_SUCCESS', districts: response.data.districts, attractions: response.data.attractions})
+                    } else {
+                        dispatch({type: 'PLACES_LOADED_FAIL'});
+                    }
+                },
+                error => {
+                    console.log(error)
+                    dispatch({type: 'PLACES_LOADED_FAIL'});
+                }
+            );
+    }
+}
+
 export function loadClasses() {
     return dispatch => {
         return axios.get(process.env.REACT_APP_CLASSES_URL)

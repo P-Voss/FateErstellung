@@ -36,7 +36,6 @@ class App extends Component {
                 "Eigenschaften",
                 "Traits",
                 "Unterklasse",
-                // "Story"
             ],
             activeStep: 0
         }
@@ -53,6 +52,7 @@ class App extends Component {
         this.handleBirthdateChange = this.handleBirthdateChange.bind(this)
         this.updateSize = this.updateSize.bind(this)
         this.props.dataActions.loadClasses()
+        this.props.dataActions.loadPlaces()
         this.props.dataActions.loadTraits()
         this.props.dataActions.loadAttributes()
     }
@@ -89,6 +89,8 @@ class App extends Component {
                     handleResidenceChange={this.handleResidenceChange}
                     handleBirthdateChange={this.handleBirthdateChange}
                     onMount={this.props.dataActions.removeSubclass}
+                    districts={this.props.creationData.districts}
+                    attractions={this.props.creationData.attractions}
                 />
             case 2:
                 return <Class chosenClass={this.props.choices.chosenClass}

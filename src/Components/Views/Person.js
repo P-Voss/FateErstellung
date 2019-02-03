@@ -170,7 +170,12 @@ class Person extends Component {
                         </Grid>
                         <Grid item xs={6} sm={6}>
                             <TextField label="Stadtteil" value={residence} disabled={true} />
-                            <City residence={residence} handleResidenceChange={handleResidenceChange} />
+                            <City
+                                residence={residence}
+                                handleResidenceChange={handleResidenceChange}
+                                districts={this.props.districts}
+                                attractions={this.props.attractions}
+                            />
                         </Grid>
                     </Grid>
                 </Grid>

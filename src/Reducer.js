@@ -40,6 +40,8 @@ const initialState = {
         },
         traits: [],
         subclasses: [],
+        districts: [],
+        attractions: []
     },
     choices: {
         chosenClass: 0,
