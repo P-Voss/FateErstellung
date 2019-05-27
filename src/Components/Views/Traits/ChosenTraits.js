@@ -44,9 +44,7 @@ export default withStyles(Styles)(
                             subheader={cost}
                         />
                         <CardContent className={classes.description}>
-                            <Typography>
-                                {trait.beschreibung}
-                            </Typography>
+                            <Typography dangerouslySetInnerHTML={{__html: trait.beschreibung}}></Typography>
                         </CardContent>
                         <CardContent>
                             <Typography>

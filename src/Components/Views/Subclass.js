@@ -70,9 +70,7 @@ class Subclass extends Component {
                                     subheader={"Kostet: " + subclass.kosten + " Erstellungspunkte"}
                                 />
                                 {changesName}
-                                <CardContent className={classes.cardContent}>
-                                    {subclass.beschreibung}
-                                </CardContent>
+                                <CardContent className={classes.cardContent} dangerouslySetInnerHTML={{__html: subclass.beschreibung}}></CardContent>
                                 <CardActions>
                                     <Button
                                         variant={"contained"}

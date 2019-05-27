@@ -54,7 +54,7 @@ class Class extends Component {
                         title={classData.bezeichnung}
                     />
                     <CardContent>
-                        <Typography className={classes.cardContent}>{classData.beschreibung}</Typography>
+                        <Typography className={classes.cardContent} dangerouslySetInnerHTML={{__html: classData.beschreibung}}></Typography>
                     </CardContent>
                     <CardActions>
                         <Button

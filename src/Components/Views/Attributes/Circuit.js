@@ -59,7 +59,7 @@ const Circuit = ({
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Typography variant={"body1"}
-                                    className={classes.cardContent}>{circuitCategory.beschreibung}</Typography>
+                                    className={classes.cardContent} dangerouslySetInnerHTML={{__html: circuitCategory.beschreibung}}></Typography>
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                         {
