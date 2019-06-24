@@ -1,4 +1,4 @@
-import {CREATION_SUCCESS, REQUEST_CREATION, CREATION_FAILURE} from "../Actions/CreationActions"
+import {CREATION_SUCCESS, REQUEST_CREATION, CREATION_FAILURE, CONFIRM_ERROR} from "../Actions/CreationActions"
 
 export default function system(state = {}, action) {
     switch (action.type) {
@@ -12,6 +12,8 @@ export default function system(state = {}, action) {
         case CREATION_FAILURE:
             return {...state, loading: false, success: false, error: action.errormessage}
 
+        case CONFIRM_ERROR:
+            return {...state, loading: false, success: false, error: ''}
 
         default:
             return state

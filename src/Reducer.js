@@ -26,7 +26,7 @@ const initialState = {
         gender: 'female',
         dateOfBirth: '1995-01-01',
         eyeColor: '',
-        size: '',
+        size: '160',
         preference: '',
         residence: ''
     },
@@ -57,6 +57,8 @@ const initialState = {
 };
 
 export default function creationApp(state = initialState, action) {
+    console.log(state.system)
+    console.log(state.test)
     return {
         system: system(state.system, action),
         choices: choices(state.choices, action),

@@ -1,5 +1,6 @@
 export const loadStore = () => {
     try {
+        // localStorage.clear()
         const serializedStore = localStorage.getItem('FateAlpha');
         if(serializedStore === null) {
             return undefined

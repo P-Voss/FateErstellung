@@ -6,7 +6,6 @@ import Person from "./Components/Views/Person"
 import Class from "./Components/Views/Class"
 import Attributes from "./Components/Views/Attributes"
 import Subclass from "./Components/Views/Subclass"
-// import Background from "./Components/Views/Background"
 import Intro from "./Components/Views/Intro"
 import StepButton from "./Components/Views/StepButton"
 
@@ -125,6 +124,8 @@ class App extends Component {
                     onLoad={() => this.props.dataActions.loadSubclasses(this.props.choices)}
                     onPick={this.props.dataActions.pickSubclass}
                     onRemove={this.props.dataActions.removeSubclass}
+                    onConfirm={this.props.creationActions.confirmError}
+                    error={this.props.system.error}
                 />
             default:
                 return <Person

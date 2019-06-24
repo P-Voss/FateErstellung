@@ -16,7 +16,6 @@ export function loadPlaces() {
                     }
                 },
                 error => {
-                    console.log(error)
                     dispatch({type: 'PLACES_LOADED_FAIL'});
                 }
             );
@@ -36,7 +35,6 @@ export function loadClasses() {
                     }
                 },
                 error => {
-                    console.log(error)
                     dispatch({type: 'CLASS_LOADED_FAIL'});
                 }
             );
@@ -57,7 +55,6 @@ export function loadSubclasses(choices) {
             {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
             .then(
                 response => {
-                    console.log(response)
                     if (response.data.success) {
                         dispatch({type: 'SUBCLASS_LOADED_SUCCESS', subclasses: response.data.subclasses})
                     } else {
@@ -65,7 +62,6 @@ export function loadSubclasses(choices) {
                     }
                 },
                 error => {
-                    console.log(error)
                     dispatch({type: 'SUBCLASS_LOADED_FAIL'});
                 }
             );
@@ -77,7 +73,6 @@ export function loadTraits() {
         return axios.get(process.env.REACT_APP_TRAITS_URL)
             .then(
                 response => {
-                    console.log(response)
                     if (response.data.success) {
                         dispatch({type: 'TRAITS_LOADED_SUCCESS', traits: response.data.traits})
                     } else {
@@ -87,7 +82,6 @@ export function loadTraits() {
             )
             .catch(
                 error => {
-                    console.log(error)
                     dispatch({type: 'TRAITS_LOADED_FAIL'});
                 }
             )

@@ -3,6 +3,13 @@ import axios from "axios"
 export const REQUEST_CREATION = 'REQUEST_CREATION'
 export const CREATION_SUCCESS = 'CREATION_SUCCESS'
 export const CREATION_FAILURE = 'CREATION_FAILURE'
+export const CONFIRM_ERROR = 'CONFIRM_ERROR'
+
+export function confirmError() {
+    return ({
+        type: CONFIRM_ERROR
+    })
+}
 
 export function createCharacter(person = {}, choices = {}, subclasses = []) {
     return dispatch => {
@@ -20,7 +27,6 @@ export function createCharacter(person = {}, choices = {}, subclasses = []) {
         data.append('residence', person.residence)
 
         data.append('circuit', choices.attributes.circuit);
-        data.append('circuit', choices.attributes.circuit);
         data.append('luck', choices.attributes.luck);
         data.append('odo', choices.attributes.odo);
         data.append('element', choices.attributes.element);
@@ -33,7 +39,6 @@ export function createCharacter(person = {}, choices = {}, subclasses = []) {
             {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
             .then(
                 response => {
-                    console.log(response)
                     if (response.data.success) {
                         window.location.replace(process.env.REACT_APP_EXIT_URL)
                     } else {
@@ -44,7 +49,6 @@ export function createCharacter(person = {}, choices = {}, subclasses = []) {
                     }
                 },
                 error => {
-                    console.log(error)
                     dispatch({
                         type: CREATION_FAILURE,
                         errormessage: 'Technischer Fehler, sorry! Sag bitte einem Admin Bescheid.'
@@ -55,8 +59,6 @@ export function createCharacter(person = {}, choices = {}, subclasses = []) {
 }
 
 function getSurname(surname, chosenSubclass, classes = []) {
-    console.log(chosenSubclass)
-    console.log(surname)
     let result = surname
     classes.forEach(subclass => {
         if (subclass.id === chosenSubclass && subclass.familienname !== null) {

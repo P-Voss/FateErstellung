@@ -24,11 +24,10 @@ const store = createStore(
 
 store.subscribe(throttle(() => {
     saveStore(
-        // store.getState()
         {
             person: store.getState().person,
             choices: store.getState().choices,
-            // creationData: store.getState().creationData
+            system: store.getState().system,
         }
     )
 }, 1000))

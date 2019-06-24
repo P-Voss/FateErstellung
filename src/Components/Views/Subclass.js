@@ -7,6 +7,7 @@ import Card from "@material-ui/core/Card/Card"
 import CardContent from "@material-ui/core/CardContent/CardContent"
 import CardActions from "@material-ui/core/CardActions/CardActions"
 import CardHeader from "@material-ui/core/CardHeader"
+import SweetAlert from 'react-bootstrap-sweetalert'
 
 const styles = {
     explanation: {
@@ -45,11 +46,16 @@ class Subclass extends Component {
         this.props.onLoad()
     }
     render() {
-        const {chosenClass, subclasses, creationPoints, classes, onPick} = this.props
+        const {chosenClass, subclasses, creationPoints, classes, onPick, error, onConfirm} = this.props
+        let errorView
+        if (error.length > 0) {
+            errorView = (<SweetAlert title="Kleiner Fehler" onConfirm={onConfirm}>{error}</SweetAlert>)
+        }
         return <div>
             <Typography className={[classes.explanation, classes.points].join(' ')} variant="h4">
                 Verfügbare Punkte: {creationPoints}
             </Typography>
+            {errorView}
             <Grid container spacing={16} className={classes.classContainer}>
                 {subclasses.map(subclass => {
                     let cardClasses = []
