@@ -1,9 +1,16 @@
 import axios from "axios"
 
+export const START = 'START'
 export const REQUEST_CREATION = 'REQUEST_CREATION'
 export const CREATION_SUCCESS = 'CREATION_SUCCESS'
 export const CREATION_FAILURE = 'CREATION_FAILURE'
 export const CONFIRM_ERROR = 'CONFIRM_ERROR'
+
+export function startCreation() {
+    return ({
+        type: START
+    })
+}
 
 export function confirmError() {
     return ({

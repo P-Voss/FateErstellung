@@ -64,6 +64,9 @@ class App extends Component {
                 this.props.creationData.subclasses
             )
         } else {
+            if (this.props.system.loading) {
+                this.props.creationActions.startCreation()
+            }
             this.setState({
                 ...this.state,
                 "activeStep": nextStep

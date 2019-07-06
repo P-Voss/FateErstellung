@@ -1,7 +1,10 @@
-import {CREATION_SUCCESS, REQUEST_CREATION, CREATION_FAILURE, CONFIRM_ERROR} from "../Actions/CreationActions"
+import {START, CREATION_SUCCESS, REQUEST_CREATION, CREATION_FAILURE, CONFIRM_ERROR} from "../Actions/CreationActions"
 
 export default function system(state = {}, action) {
     switch (action.type) {
+
+        case START:
+            return {...state, loading: false, success: false, error: ''}
 
         case REQUEST_CREATION:
             return {...state, loading: true}
