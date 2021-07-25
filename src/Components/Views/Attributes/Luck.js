@@ -36,14 +36,14 @@ const Luck = ({chosenLuck, classes = {}, luck = [], onPick = () => {}}) => {
             <Grid container spacing={16}>
                 {luck.map((luckCategory, key) => {
                     let cardClasses = [classes.LuckCard]
-                    if (chosenLuck === luckCategory.id) {
+                    if (chosenLuck === luckCategory.id * 1) {
                         cardClasses.push(classes.chosen)
                     }
-                    let raised = chosenLuck === luckCategory.id
+                    let raised = chosenLuck === luckCategory.id * 1
                     let actions
                     let cost = "Nur per Trait erreichbar"
                     if (luckCategory.kosten !== null) {
-                        actions = <ChoiceButton isActive={luckCategory.id === chosenLuck} onPick={() => onPick(luckCategory.id)}/>
+                        actions = <ChoiceButton isActive={luckCategory.id * 1 === chosenLuck} onPick={() => onPick(luckCategory.id * 1)}/>
                         if (luckCategory.kosten >= 0) {
                             cost = "Kostet: " + luckCategory.kosten + " Erstellungspunkte"
                         } else {

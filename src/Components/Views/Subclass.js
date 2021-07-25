@@ -48,7 +48,8 @@ class Subclass extends Component {
     render() {
         const {chosenClass, subclasses, creationPoints, classes, onPick, error, onConfirm} = this.props
         let errorView
-        if (error.length > 0) {
+        console.log(error)
+        if (error !== '') {
             errorView = (<SweetAlert title="Kleiner Fehler" onConfirm={onConfirm}>{error}</SweetAlert>)
         }
         return <div>
@@ -59,11 +60,11 @@ class Subclass extends Component {
             <Grid container spacing={16} className={classes.classContainer}>
                 {subclasses.map(subclass => {
                     let cardClasses = []
-                    if (chosenClass === subclass.id) {
+                    if (chosenClass === subclass.id * 1) {
                         cardClasses.push(classes.chosen)
                     }
-                    let raised = chosenClass === subclass.id
-                    let buttonDisabled = chosenClass === subclass.id
+                    let raised = chosenClass === subclass.id * 1
+                    let buttonDisabled = chosenClass === subclass.id * 1
                     const changesName = subclass.familienname !== null ?
                         <CardContent>Ändert den Nachnamen zu: {subclass.familienname}</CardContent>
                         : ''
@@ -76,13 +77,13 @@ class Subclass extends Component {
                                     subheader={"Kostet: " + subclass.kosten + " Erstellungspunkte"}
                                 />
                                 {changesName}
-                                <CardContent className={classes.cardContent} dangerouslySetInnerHTML={{__html: subclass.beschreibung}}></CardContent>
+                                <CardContent className={classes.cardContent} dangerouslySetInnerHTML={{__html: subclass.beschreibung}} />
                                 <CardActions>
                                     <Button
                                         variant={"contained"}
                                         color={"primary"}
                                         disabled={buttonDisabled}
-                                        onClick={() => onPick(subclass.id)}
+                                        onClick={() => onPick(subclass.id * 1)}
                                     >
                                         Auswählen
                                     </Button>

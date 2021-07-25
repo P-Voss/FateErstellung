@@ -43,7 +43,7 @@ class Class extends Component {
 
             {classesToChoose.map((classData, key) => {
                 let cardClasses = [classes.card]
-                if (chosenClass === classData.id) {
+                if (chosenClass * 1 === classData.id * 1) {
                     cardClasses.push(classes.chosen)
                 }
                 let raised = chosenClass === classData.id
@@ -54,12 +54,12 @@ class Class extends Component {
                         title={classData.bezeichnung}
                     />
                     <CardContent>
-                        <Typography className={classes.cardContent} dangerouslySetInnerHTML={{__html: classData.beschreibung}}></Typography>
+                        <Typography className={classes.cardContent} dangerouslySetInnerHTML={{__html: classData.beschreibung}} />
                     </CardContent>
                     <CardActions>
                         <Button
                             variant={"contained"} color={buttonColor}
-                            onClick={() => this.pickClass(classData.id)}
+                            onClick={() => this.pickClass(classData.id * 1)}
                             disabled={buttonDisabled}
                         >
                             Klasse wählen

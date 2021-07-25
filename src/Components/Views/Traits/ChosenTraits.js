@@ -44,7 +44,7 @@ export default withStyles(Styles)(
                             subheader={cost}
                         />
                         <CardContent className={classes.description}>
-                            <Typography dangerouslySetInnerHTML={{__html: trait.beschreibung}}></Typography>
+                            <Typography dangerouslySetInnerHTML={{__html: trait.beschreibung}} />
                         </CardContent>
                         <CardContent>
                             <Typography>
@@ -53,7 +53,7 @@ export default withStyles(Styles)(
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button variant="contained" color="secondary" size={"small"} onClick={() => onRemove(trait.id)}>Entfernen</Button>
+                            <Button variant="contained" color="secondary" size={"small"} onClick={() => onRemove(trait.id * 1)}>Entfernen</Button>
                         </CardActions>
                     </Card>
                 </Grid>

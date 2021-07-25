@@ -41,14 +41,14 @@ const Odo = ({chosenOdo, classes = {}, odo = [], onPick = () => {}}) => {
             <Grid container spacing={16}>
                 {odo.map((odoCategory, key) => {
                     let cardClasses = [classes.odoCard]
-                    if (chosenOdo === odoCategory.id) {
+                    if (chosenOdo === odoCategory.id * 1) {
                         cardClasses.push(classes.chosen)
                     }
-                    let raised = chosenOdo === odoCategory.id
+                    let raised = chosenOdo === odoCategory.id * 1
                     let actions
                     let cost = "Nur per Trait erreichbar"
                     if (odoCategory.kosten !== null) {
-                        actions = <ChoiceButton isActive={odoCategory.id === chosenOdo} onPick={() => onPick(odoCategory.id)}/>
+                        actions = <ChoiceButton isActive={odoCategory.id * 1 === chosenOdo} onPick={() => onPick(odoCategory.id * 1)}/>
                         if (odoCategory.kosten >= 0) {
                             cost = "Kostet: " + odoCategory.kosten + " Erstellungspunkte"
                         } else {

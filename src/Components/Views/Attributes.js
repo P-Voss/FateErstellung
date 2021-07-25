@@ -54,7 +54,7 @@ class Attributes extends Component {
         let circuitElement
         if (chosenClass === 1) {
             circuitElement = <div className={classes.attrBlock}>
-                    <Circuit circuits={circuits} chosenCircuit={choices.circuit} onPick={circuitId => this.changeCircuit(circuitId)}/>
+                    <Circuit circuits={circuits} chosenCircuit={choices.circuit} onPick={circuitId => this.changeCircuit(circuitId * 1)}/>
                 </div>
         }
         return <div>
@@ -74,13 +74,13 @@ class Attributes extends Component {
                 </Typography>
             </div>
             <div className={classes.attrBlock}>
-                <Element elements={elements} chosenElement={choices.element} onPick={elementId => this.changeElement(elementId)}/>
+                <Element elements={elements} chosenElement={choices.element} onPick={elementId => this.changeElement(elementId * 1)}/>
             </div>
             <div className={classes.attrBlock}>
-                <Odo odo={odo} chosenOdo={choices.odo} onPick={odoId => this.changeOdo(odoId)}/>
+                <Odo odo={odo} chosenOdo={choices.odo} onPick={odoId => this.changeOdo(odoId * 1)}/>
             </div>
             <div className={classes.attrBlock}>
-                <Luck luck={luck} chosenLuck={choices.luck} onPick={luckId => this.changeLuck(luckId)}/>
+                <Luck luck={luck} chosenLuck={choices.luck} onPick={luckId => this.changeLuck(luckId * 1)}/>
             </div>
             {circuitElement}
         </div>

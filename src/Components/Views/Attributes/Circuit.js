@@ -41,13 +41,13 @@ const Circuit = ({
         <div>
             {circuits.map((circuitCategory, key) => {
                 let panelClasses = [classes.panel]
-                if (chosenCircuit === circuitCategory.id) {
+                if (chosenCircuit === circuitCategory.id * 1) {
                     panelClasses.push(classes.chosen)
                 }
                 let actions
                 if (circuitCategory.kosten !== null) {
                     actions = <ChoiceButton
-                        isActive={circuitCategory.id === chosenCircuit}
+                        isActive={circuitCategory.id * 1 === chosenCircuit}
                         onPick={() => onPick(circuitCategory.id)}
                     />
                 }
@@ -59,7 +59,7 @@ const Circuit = ({
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Typography variant={"body1"}
-                                    className={classes.cardContent} dangerouslySetInnerHTML={{__html: circuitCategory.beschreibung}}></Typography>
+                                    className={classes.cardContent} dangerouslySetInnerHTML={{__html: circuitCategory.beschreibung}} />
                     </ExpansionPanelDetails>
                     <ExpansionPanelDetails>
                         {
@@ -67,7 +67,7 @@ const Circuit = ({
                                 ? <Typography
                                     variant={"body1"}
                                     className={classes.cardContent}>
-                                    Kostet: {circuitCategory.kosten} Erstellungspunkte
+                                    Kostet: {circuitCategory.kosten * 1} Erstellungspunkte
                                 </Typography>
                                 : <Typography variant={"body1"} className={classes.cardContent}>Nur per Trait</Typography>
                         }

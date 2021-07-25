@@ -94,21 +94,21 @@ class Traits extends Component {
                         <Grid container spacing={16} className={classes.traitContainer}>
                             {traits.map((trait, key) => {
                                 let status = STATUS_ENABLED
-                                if (disabledTraitIds.indexOf(trait.id) !== -1) {
+                                if (disabledTraitIds.indexOf(trait.id * 1) !== -1) {
                                     status = STATUS_DISABLED
                                 }
-                                if (this.state.previewDisabledTraits.filter(prevTrait => prevTrait.id === trait.id).length > 0) {
+                                if (this.state.previewDisabledTraits.filter(prevTrait => prevTrait.id * 1 === trait.id * 1).length > 0) {
                                     status = STATUS_PREVIEW
                                 }
-                                if (chosenTraits.indexOf(trait.id) !== -1) {
+                                if (chosenTraits.indexOf(trait.id * 1) !== -1) {
                                     status = STATUS_CHOSEN
                                 }
                                 return <Grid key={key} item>
                                     <Trait
                                         trait={trait}
                                         status={status}
-                                        onPick={() => this.onPick(trait.id)}
-                                        onRemove={() => this.onRemove(trait.id)}
+                                        onPick={() => this.onPick(trait.id * 1)}
+                                        onRemove={() => this.onRemove(trait.id * 1)}
                                     />
                                 </Grid>
                             })}

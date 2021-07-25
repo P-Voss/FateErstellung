@@ -44,11 +44,11 @@ const Element = ({chosenElement, classes = {}, elements = [], onPick = () => {}}
                 <Grid container spacing={16}>
                     {elements.map((element, key) => {
                         let cardClasses = [classes.card, classes.elementCard]
-                        if (chosenElement === element.id) {
+                        if (chosenElement === element.id * 1) {
                             cardClasses.push(classes.chosen)
                         }
-                        let raised = chosenElement === element.id
-                        let actions = <ChoiceButton isActive={chosenElement === element.id} onPick={() => onPick(element.id)}/>
+                        let raised = chosenElement === element.id * 1
+                        let actions = <ChoiceButton isActive={chosenElement === element.id} onPick={() => onPick(element.id * 1)}/>
                         return <Grid key={key} item>
                             <Card raised={raised}  className={cardClasses.join(' ')}>
                                 <CardHeader

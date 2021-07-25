@@ -57,8 +57,6 @@ const initialState = {
 };
 
 export default function creationApp(state = initialState, action) {
-    console.log(state.system)
-    console.log(state.test)
     return {
         system: system(state.system, action),
         choices: choices(state.choices, action),
