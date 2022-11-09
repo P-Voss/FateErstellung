@@ -29,7 +29,7 @@
   "devDependencies": {
     "dotenv": "^6.1.0",
     "lodash": "latest",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.1",
     "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6",
     "webpack-bundle-analyzer": "^3.0.3"
